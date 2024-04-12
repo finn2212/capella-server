@@ -6,14 +6,29 @@ const app = express();
 // Import routes
 const productsRoutes = require('./routes/productsRoutes');
 
-// Configure CORS
-app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
-    methods: ['GET', 'POST'],
-    credentials: true
-}));
+// Define allowed origins
+const allowedOrigins = [
+  'https://dev.capellaprint.com',
+  'http://localhost:3000',
+  'https://capellaprint.com'
+];
 
-app.use(express.json());  // Middleware to parse JSON bodies
+// Configure CORS
+const corsOptions = {
+  origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+      } else {
+          callback(new Error('Not allowed by CORS'));
+      }
+  },
+  credentials: true,
+  methods: ['GET', 'POST']
+};
+
+app.use(cors(corsOptions));
+
+app.use(express.json()); 
 
 // Use the product routes
 app.use('/api/products', productsRoutes);

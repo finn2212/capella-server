@@ -65,7 +65,6 @@ exports.calculatePrice = (req, res) => {
   const pagePrice = paperFormat < 4 ? 0.14 : 0.2;
   const adjustedPagePrice = color === "false" ? pagePrice * 1.5 : pagePrice;
   const totalVoicePrice = calculateVoicePrices(voices);
-  console.log(totalVoicePrice,"totalVoicePrice")
   const discount = findAppropriateDiscount(productQuantity).discount;
   const coverCharge = hasCover === "true" ? 1.5 : 0;
   const basePrice = pagesQuantity * adjustedPagePrice + totalVoicePrice + coverCharge;

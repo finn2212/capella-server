@@ -22,6 +22,7 @@ app.use('/api/products', productsRoutes);
 app.get('/', (req, res) => {
     res.send('Server is up and running!');
 });
+console.log(process.env.CORS_ORIGIN,"process.env.CORS_ORIGIN")
 
 // Start the server
 const PORT = process.env.PORT || 4000;

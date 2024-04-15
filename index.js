@@ -12,6 +12,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://capellaprint.com'
 ];
+//active branch
 
 // Configure CORS
 const corsOptions = {

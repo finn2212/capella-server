@@ -3,11 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-// Import routes
-const productsRoutes = require('./routes/productsRoutes');
+
 
 // Define allowed origins
-const allowedOrigins = [
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
   'https://dev.capellaprint.com',
   'http://localhost:3000',
   'https://capellaprint.com'
@@ -17,12 +16,13 @@ const allowedOrigins = [
 // Configure CORS
 const corsOptions = {
   origin: function (origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-          callback(null, true);
-      } else {
-          callback(new Error('Not allowed by CORS'));
-      }
-  },
+    console.log(origin); // Log the origin to see what is received
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+    } else {
+        callback(new Error('Not allowed by CORS'));
+    }
+},
   credentials: true,
   methods: ['GET', 'POST']
 };
@@ -30,6 +30,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json()); 
+// Import routes
+const productsRoutes = require('./routes/productsRoutes');
 
 // Use the product routes
 app.use('/api/products', productsRoutes);

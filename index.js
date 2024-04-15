@@ -13,6 +13,8 @@ const allowedOrigins = [
   'https://capellaprint.com'
 ];
 
+//this is main
+
 // Configure CORS
 const corsOptions = {
   origin: function (origin, callback) {

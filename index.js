@@ -13,6 +13,8 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
 ];
 //active branch
 
+//this is main
+
 // Configure CORS
 const corsOptions = {
   origin: function (origin, callback) {

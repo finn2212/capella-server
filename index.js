@@ -19,7 +19,6 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
 // Configure CORS
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log(origin); // Log the origin to see what is received
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
     } else {
@@ -45,7 +44,6 @@ app.use('/api', uploadRoutes);  // Changed this line
 app.get('/', (req, res) => {
     res.send('Server is up and running!');
 });
-console.log(process.env.CORS_ORIGIN,"process.env.CORS_ORIGIN")
 
 // Start the server
 const PORT = process.env.PORT || 4000;

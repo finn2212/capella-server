@@ -6,6 +6,5 @@ const { createClient } = require('@supabase/supabase-js');
 const supabaseUrl = 'https://kyexsedeudmtmwtrxlyc.supabase.co'
 const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
-console.log("Supabase Key:", supabaseKey); 
 
 module.exports = { supabase };

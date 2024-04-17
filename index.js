@@ -35,9 +35,11 @@ app.use(cors(corsOptions));
 app.use(express.json()); 
 // Import routes
 const productsRoutes = require('./routes/productsRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 // Use the product routes
 app.use('/api/products', productsRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Define a test route to ensure the server is working
 app.get('/', (req, res) => {

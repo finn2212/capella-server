@@ -23,6 +23,8 @@ const uploadFile = async (fileBuffer, originalName) => {
       .from('uploads')
       .getPublicUrl(data.Key);
 
+      console.log(data)
+
     if (urlError) throw new Error(urlError.message);
 
     return {

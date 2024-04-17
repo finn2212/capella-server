@@ -76,7 +76,9 @@ exports.calculatePrice = (req, res) => {
   const formattedPrice = (totalPrice * productQuantity + handlingFee)
     .toFixed(2)
     .replace(".", ",");
+    const singlePrice=  (totalPrice + (handlingFee/ productQuantity))
+    .toFixed(2);
   const productionTime = productQuantity >= 100 ? "3–5 Tage" : "1–3 Tage";
 
-  res.json({ price: formattedPrice, productionTime });
+  res.json({ price: formattedPrice, productionTime, singlePrice });
 };

@@ -5,10 +5,10 @@ const router = express.Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
+// This route now effectively becomes /api/upload
 router.post('/upload', upload.single('upload'), (req, res, next) => {
     console.log("Route /upload accessed");
     next();
-  }, uploadFileController);
-  
+}, uploadFileController);
 
 module.exports = router;

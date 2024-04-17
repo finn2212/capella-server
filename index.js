@@ -39,7 +39,7 @@ const uploadRoutes = require('./routes/uploadRoutes');
 
 // Use the product routes
 app.use('/api/products', productsRoutes);
-app.use('/api/upload', uploadRoutes);
+app.use('/api', uploadRoutes);  // Changed this line
 
 // Define a test route to ensure the server is working
 app.get('/', (req, res) => {

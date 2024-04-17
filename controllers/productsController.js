@@ -64,10 +64,14 @@ exports.calculatePrice = (req, res) => {
 
   const pagePrice = paperFormat < 4 ? 0.14 : 0.2;
   const adjustedPagePrice = color === "false" ? pagePrice * 1.5 : pagePrice;
+  let bindingTypeExtra = 0;
+  if (bindingType === "false") {
+    bindingTypeExtra = paperFormat > 4 ? 4.50 : 3.50;
+  }
   const totalVoicePrice = calculateVoicePrices(voices);
   const discount = findAppropriateDiscount(productQuantity).discount;
   const coverCharge = hasCover === "true" ? 1.5 : 0;
-  const basePrice = pagesQuantity * adjustedPagePrice + totalVoicePrice + coverCharge;
+  const basePrice = pagesQuantity * adjustedPagePrice + totalVoicePrice + coverCharge + bindingTypeExtra;
   const totalPrice = basePrice * (1 - discount);
   const formattedPrice = (totalPrice * productQuantity + handlingFee)
     .toFixed(2)

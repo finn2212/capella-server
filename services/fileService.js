@@ -87,7 +87,6 @@ async function checkPdfData(fileBuffer) {
   const pdfDoc = await PDFDocument.load(fileBuffer);
   const pages = pdfDoc.getPages().length;
   const matchedFormat = await checkPdfFormat(fileBuffer);  // Placeholder for actual format checking logic
-  console.log(pages, "pages")
   return { matchedFormat, pages };
 }
 
@@ -97,11 +96,15 @@ async function checkPdfFormat(fileBuffer) {
     const numPages = pdfDoc.getPageCount();
 
     let formatMatches = [];
+    let orientations = [];
     let formatID = 0; // ID of the matched format
 
     for (let i = 0; i < numPages; i++) {
       const page = pdfDoc.getPage(i);
       const { width, height } = page.getSize();
+
+      const orientation = width > height ? false : true;
+      orientations.push(orientation); // Add orientation for each page
 
       // Compare each format with tolerance
       let matched = false;
@@ -119,7 +122,8 @@ async function checkPdfFormat(fileBuffer) {
     return {
       message: numPages === formatMatches.length ? "All pages match specified formats" : "Not all pages match specified formats",
       matchedFormat: formatMatches[0], // Assuming the first page's format applies to all for simplicity
-      formatID: formatID // Return the ID of the matched format
+      formatID: formatID,
+      isUpright: orientations[0]// Return the ID of the matched format
     };
   } catch (error) {
     console.error("Error loading or analyzing PDF:", error);

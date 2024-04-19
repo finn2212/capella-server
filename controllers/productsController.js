@@ -20,6 +20,7 @@
     ];
 const handlingFee = 18.69; // Example fee for handling each voice
 const voicePagePrice = 0.14;
+const productService = require('../services/createProductServices');
 
 const calculateVoicePrices = (voices) =>
   voices.reduce(
@@ -42,11 +43,16 @@ const calculateVoicePrices = (voices) =>
     return applicableDiscount;
   };
 
-// Controller for creating products
-exports.createProduct = (req, res) => {
-  // Placeholder for product creation logic
-  res.send(true); // Simulate a successful product creation
-};
+  exports.createProduct = async (req, res) => {
+    try {
+      const musicSheetProject = req.body; // Get product details from the request body
+      const productId = await productService.createProduct(musicSheetProject); // Await the promise from the service layer
+      res.json({ success: true, product: productId }); // Send successful response with the productId
+    } catch (error) {
+      console.error("Error in creating product:", error);
+      res.status(500).json({ success: false, message: "Failed to create product", error: error.message }); // Send error response
+    }
+  };
 
 // Controller functions
 exports.calculatePrice = (req, res) => {

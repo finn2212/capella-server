@@ -1,5 +1,6 @@
 const propertyMappings = require('../shared/propertyMappings');
 const axios = require('axios');
+require('dotenv').config();
 
 exports.createProduct = async (musicSheetProject) => {
     try {
@@ -26,8 +27,6 @@ exports.createProduct = async (musicSheetProject) => {
     const desc = getDesc(musicSheetProject);
     const weight = 0.88; // Assuming weight is a property of musicSheetProject
     const priceAsFloat = parseFloat(musicSheetProject.price);
-    console.log(musicSheetProject);
-    console.log(priceAsFloat,"priceAsFloat");
 
     return {
       name: musicSheetProject.productName,
@@ -123,10 +122,10 @@ const getProperties = (musicSheetProject) => {
   const authenticate = async () => {
     const authData = {
       grant_type: 'client_credentials',
-      client_id: 'SWIAEJZYQ09VBFPSNZZ0T0VLUG', // Use environment variables for these in production
-      client_secret: 'cTAxWmRsZ2kxaHppRjN1WldrUTBIYWoyS1czUHV0TlJzdWVMZWM'
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET
     };
-    const swEndPoint = 'https://s23511.creoline.cloud/webdev-staging'; // Adjust to your actual Shopware API endpoint
+    const swEndPoint = process.env.SHOPWARE_ENDPOINT; // Adjust to your actual Shopware API endpoint
   
     try {
       const response = await axios.post(`${swEndPoint}/api/oauth/token`, authData);
@@ -138,7 +137,7 @@ const getProperties = (musicSheetProject) => {
   };
 
   const createProduct = async (accessToken, productData) => {
-    const swEndPoint = 'https://s23511.creoline.cloud/webdev-staging';
+    const swEndPoint = process.env.SHOPWARE_ENDPOINT;
 
     try {
         const response = await axios.post(`${swEndPoint}/api/product`, productData, {
@@ -160,8 +159,8 @@ const getProperties = (musicSheetProject) => {
   };
 
   const fetchProduct = async (productNumber) => {
-    const swEndPoint = 'https://s23511.creoline.cloud/webdev-staging';
-    const swAccessKey = 'SWSCUHZMWDM2TTLINJFXMKG3TW';
+    const swEndPoint = process.env.SHOPWARE_ENDPOINT;
+    const swAccessKey = process.env.SWACCESSKEY;
     const config = {
       method: 'POST',
       url: `${swEndPoint}/store-api/search`,

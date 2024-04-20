@@ -33,11 +33,12 @@ const calculateVoicePrices = (voices) =>
     // Assuming the discounts are sorted by 'amount' in ascending order
     let applicableDiscount = discounts[0];  // Start with the lowest possible discount
     for (let i = discounts.length - 1; i >= 0; i--) {
-      if (quantity >= discounts[i].amount) {
+      if (quantity > discounts[i].amount) {
         applicableDiscount = discounts[i];
         break;
       }
     }
+    console.log(applicableDiscount.id);
     return applicableDiscount;
   };
 

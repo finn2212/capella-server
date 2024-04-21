@@ -10,7 +10,8 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
   'https://dev.capellaprint.com',
   'http://localhost:3000',
   'https://www.capellaprint.com',
-  'https://capellaprint.com/'
+  'https://capellaprint.com/',
+  'https://preview.capellaprint.com'
 ];
 //active branch
 

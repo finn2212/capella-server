@@ -101,6 +101,8 @@ const getProperties = (musicSheetProject) => {
   const colorKey = musicSheetProject.color ? "true" : "false";
   const bindingTypesKey = musicSheetProject.bindingType ? "true" : "false";
   const envelopesKey = musicSheetProject.hasCover ? "true" : "false";
+  const paperTypeKey =
+    musicSheetProject.isWhitePaper === "true" ? "white" : "yellow"; // Assuming paperColor is the property determining the paper type
 
   // Project Types
   if (
@@ -130,6 +132,10 @@ const getProperties = (musicSheetProject) => {
       id: propertyMappings.paperFormatMappings[musicSheetProject.paperFormat]
         .id,
     });
+  }
+
+  if (propertyMappings.paperTypes[paperTypeKey]) {
+    ids.push({ id: propertyMappings.paperTypes[paperTypeKey].id });
   }
   return ids;
 };

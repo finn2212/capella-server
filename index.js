@@ -36,10 +36,13 @@ app.use(express.json());
 // Import routes
 const productsRoutes = require('./routes/productsRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const musicSheetRoutes = require('./routes/musicSheetRoutes')
 
 // Use the product routes
 app.use('/api/products', productsRoutes);
-app.use('/api', uploadRoutes);  // Changed this line
+app.use('/api', uploadRoutes); 
+app.use('/api/musicSheet', musicSheetRoutes); // Notice the removal of the trailing slash for consistency
+
 
 // Define a test route to ensure the server is working
 app.get('/', (req, res) => {

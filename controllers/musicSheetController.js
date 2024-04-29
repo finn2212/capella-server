@@ -29,6 +29,7 @@ exports.createMusicSheet = async (musicSheetProject) => {
     productiontime: musicSheetProject.productionTime,
     notesfile: musicSheetProject.notesFile, // Assuming notesFile is already a proper object
     coverfile: musicSheetProject.coverFile,
+    voices: musicSheetProject.voices
   };
 
   // Attempt to insert the processed data into the database
@@ -79,6 +80,7 @@ exports.getMusicSheetByShopwareId = async (req, res) => {
       productionTime: item.productiontime,
       notesFile: item.notesfile,
       coverFile: item.coverfile,
+      voices: item.voices
     }));
 
     res.json({ success: true, musicSheet: formattedData[0] });

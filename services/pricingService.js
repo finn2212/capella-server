@@ -37,7 +37,6 @@ const findAppropriateDiscount = (quantity) => {
       break;
     }
   }
-  console.log("Selected discount:", applicableDiscount.id);
   return applicableDiscount;
 };
 
@@ -49,10 +48,10 @@ function calculatePrice({
   bindingType,
   hasCover,
   productQuantity,
-  voices,
+  voices
 }) {
-  const pagePrice = paperFormat < 4 ? 0.14 : 0.2;
-  const adjustedPagePrice = color === "true" ? pagePrice * 1.5 : pagePage;
+    const pagePrice = paperFormat < 4 ? 0.14 : 0.2;
+    const adjustedPagePrice = color === "true" ? pagePrice * 1.5 : pagePrice;
   let bindingTypeExtra = 0;
   if (bindingType === "false") {
     bindingTypeExtra = paperFormat > 4 ? 4.5 : 3.5;

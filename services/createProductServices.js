@@ -7,6 +7,7 @@ exports.createProduct = async (musicSheetProject) => {
     // Call the function to construct the product data from the provided project details
     //const productData = getProductData(musicSheetProject);
     const accessToken = await authenticate();
+    console.log(musicSheetProject, "creating with:")
     productData = getProductData(musicSheetProject);
 
     await createProduct(accessToken, productData);

@@ -27,21 +27,42 @@ const corsOptions = {
     }
 },
   credentials: true,
-  methods: ['GET', 'POST']
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 };
 
-app.use(cors(corsOptions));
+const permissiveCorsOptions = {
+  origin: '*', // Allows all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Assuming you want to allow typical HTTP methods
+  credentials: false // It's important to not allow credentials on a fully open endpoint
+};
+
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/public')) {
+    // Apply permissive CORS for specific public API endpoints
+    cors(permissiveCorsOptions)(req, res, next);
+  } else {
+    // Apply restrictive CORS for all other endpoints
+    cors(corsOptions)(req, res, function(err) {
+      if (err) {
+        return res.status(403).json({ message: err.message });
+      }
+      next();
+    });
+  }
+});
 
 app.use(express.json()); 
 // Import routes
 const productsRoutes = require('./routes/productsRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
-const musicSheetRoutes = require('./routes/musicSheetRoutes')
+const musicSheetRoutes = require('./routes/musicSheetRoutes');
+const publicRoutes = require('./routes/publicRoutes');
 
 // Use the product routes
 app.use('/api/products', productsRoutes);
 app.use('/api', uploadRoutes); 
-app.use('/api/musicSheet', musicSheetRoutes); // Notice the removal of the trailing slash for consistency
+app.use('/api/musicSheet', musicSheetRoutes); 
+app.use('/api/public', publicRoutes); 
 
 
 // Define a test route to ensure the server is working

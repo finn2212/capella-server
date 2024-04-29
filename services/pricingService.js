@@ -1,4 +1,4 @@
-// Define discount tiers
+// pricingService.js
 const discounts = [
   { id: 1, discount: 0, amount: 0 },
   { id: 2, discount: 0.1, amount: 1 },
@@ -18,83 +18,66 @@ const discounts = [
   { id: 16, discount: 0.75, amount: 150 },
   { id: 17, discount: 0.76, amount: 250 },
 ];
-const handlingFee = 18.69; // Example fee for handling each voice
-const voicePagePrice = 0.14;
-const productService = require("../services/createProductServices");
-const musicSheetController = require("./musicSheetController");
 
+const handlingFee = 18.69; // Example fee for handling each voice
+const voicePagePrice = 0.14; // Example fixed fee, adjust as necessary
+// Calculate prices for additional voice parts
 const calculateVoicePrices = (voices) =>
   voices.reduce(
     (total, voice) => total + voice.pages * voicePagePrice * voice.quantity,
     0
   );
 
+// Find the most appropriate discount based on quantity
 const findAppropriateDiscount = (quantity) => {
-  // Assuming the discounts are sorted by 'amount' in ascending order
   let applicableDiscount = discounts[0]; // Start with the lowest possible discount
   for (let i = discounts.length - 1; i >= 0; i--) {
-    if (quantity > discounts[i].amount) {
+    if (quantity >= discounts[i].amount) {
       applicableDiscount = discounts[i];
       break;
     }
   }
-  console.log(applicableDiscount.id);
+  console.log("Selected discount:", applicableDiscount.id);
   return applicableDiscount;
 };
 
-exports.createProduct = async (req, res) => {
-  try {
-    const musicSheetProject = req.body; // Get product details from the request body
-    const newProduct = await productService.createProduct(musicSheetProject); // Await the promise from the service layer
-    musicSheetProject.shopwareId = newProduct.id;
-    await musicSheetController.createMusicSheet(
-      musicSheetProject
-    );
-    res.json({ success: true, product: newProduct }); // Send successful response with the productId
-  } catch (error) {
-    console.error("Error in creating product:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to create product",
-        error: error.message,
-      }); // Send error response
-  }
-};
-
-// Controller functions
-exports.calculatePrice = (req, res) => {
-  const {
-    pagesQuantity,
-    paperFormat,
-    color,
-    bindingType,
-    hasCover,
-    productQuantity,
-    voices,
-  } = req.body;
-
+// Main calculation function
+function calculatePrice({
+  pagesQuantity,
+  paperFormat,
+  color,
+  bindingType,
+  hasCover,
+  productQuantity,
+  voices,
+}) {
   const pagePrice = paperFormat < 4 ? 0.14 : 0.2;
-  const adjustedPagePrice = color === "true" ? pagePrice * 2 : pagePrice;
+  const adjustedPagePrice = color === "true" ? pagePrice * 1.5 : pagePage;
   let bindingTypeExtra = 0;
   if (bindingType === "false") {
     bindingTypeExtra = paperFormat > 4 ? 4.5 : 3.5;
   }
+
   const totalVoicePrice = calculateVoicePrices(voices);
-  const discount = findAppropriateDiscount(productQuantity).discount;
+  const discountDetails = findAppropriateDiscount(productQuantity);
   const coverCharge = hasCover === "true" ? 1.5 : 0;
   const basePrice =
     pagesQuantity * adjustedPagePrice +
     totalVoicePrice +
     coverCharge +
     bindingTypeExtra;
-  const totalPrice = basePrice * (1 - discount);
+  const totalPrice = basePrice * (1 - discountDetails.discount);
   const formattedPrice = (totalPrice * productQuantity + handlingFee)
     .toFixed(2)
     .replace(".", ",");
   const singlePrice = (totalPrice + handlingFee / productQuantity).toFixed(2);
   const productionTime = productQuantity >= 100 ? "3–5 Tage" : "1–3 Tage";
 
-  res.json({ price: formattedPrice, productionTime, singlePrice });
-};
+  return {
+    price: formattedPrice,
+    productionTime,
+    singlePrice,
+  };
+}
+
+module.exports = { calculatePrice };

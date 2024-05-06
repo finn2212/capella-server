@@ -51,7 +51,7 @@ function calculatePrice({
   voices
 }) {
     const pagePrice = paperFormat < 4 ? 0.14 : 0.2;
-    const adjustedPagePrice = color === "true" ? pagePrice * 1.5 : pagePrice;
+    const adjustedPagePrice = color === "true" ? pagePrice * 2 : pagePrice;
   let bindingTypeExtra = 0;
   if (bindingType === "false") {
     bindingTypeExtra = paperFormat > 4 ? 4.5 : 3.5;

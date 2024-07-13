@@ -1,0 +1,18 @@
+name: Keep Supabase Active
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # This will run the action daily at midnight
+  workflow_dispatch:  # Allows you to manually trigger the workflow
+
+jobs:
+  keep-active:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Make a request to Node.js server
+        run: |
+          curl -X GET "previewserver.capellaprint.com/api/public/keep-alive"

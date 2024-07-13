@@ -15,4 +15,4 @@ jobs:
 
       - name: Make a request to Node.js server
         run: |
-          curl -X GET "https://your-vercel-app.vercel.app/api/public/keep-alive"
+          curl -X GET "previewserver.capellaprint.com/api/public/keep-alive"

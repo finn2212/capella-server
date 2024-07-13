@@ -6,37 +6,37 @@ const formats = {
     width: 595.28,
     height: 841.89,
     id: 1,
-    tolerance: { width: 595.28 * 0.05, height: 841.89 * 0.05 },
+    tolerance: { width: 595.28 * 0.005, height: 841.89 * 0.005 },
   },
   Klavierauszug: {
     width: 556.3,
     height: 783.46,
     id: 2,
-    tolerance: { width: 556.3 * 0.05, height: 783.46 * 0.05 },
+    tolerance: { width: 556.3 * 0.005, height: 783.46 * 0.005 },
   },
   Concert: {
     width: 662.89,
     height: 881.89,
     id: 3,
-    tolerance: { width: 662.89 * 0.05, height: 881.89 * 0.05 },
+    tolerance: { width: 662.89 * 0.005, height: 881.89 * 0.005 },
   },
   B4: {
     width: 725.01,
     height: 1018.11,
     id: 4,
-    tolerance: { width: 725.01 * 0.05, height: 1018.11 * 0.05 },
+    tolerance: { width: 725.01 * 0.005, height: 1018.11 * 0.005 },
   },
   A3: {
     width: 858.27,
     height: 1204.72,
     id: 5,
-    tolerance: { width: 858.27 * 0.05, height: 1204.72 * 0.05 },
+    tolerance: { width: 858.27 * 0.005, height: 1204.72 * 0.005 },
   },
   Dirigierpartitur: {
     width: 909.45,
     height: 1320.47,
     id: 6,
-    tolerance: { width: 909.45 * 0.05, height: 1320.47 * 0.05 },
+    tolerance: { width: 909.45 * 0.005, height: 1320.47 * 0.005 },
   },
 };
 
